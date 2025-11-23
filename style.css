@@ -926,3 +926,94 @@ button:hover, .nav-icon:hover, .settings-option:hover, .search-category:hover {
 .dark-mode .comments-section h3 {
   color: var(--text-color);
     }
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+.app-title {
+
+  font-family: 'Poppins', sans-serif;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  margin: 0;
+
+  padding: 1px;
+
+  background: linear-gradient(90deg, #ff74c6, #a45dff, #4dacff);
+
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  letter-spacing: 1.5px;
+
+  display: inline-block;
+
+  vertical-align: middle;
+
+  /* Efecto de resplandor */
+
+  text-shadow: 0 0 12px rgba(255, 158, 246, 0.4),
+
+               0 0 22px rgba(167, 120, 255, 0.3);
+
+  /* Animación combinada */
+
+  animation: glowPulse 2.2s ease-in-out infinite,
+
+             shine 3s linear infinite;
+
+}
+
+/* Brillo que pasa por el texto */
+
+@keyframes shine {
+
+  0% { background-position: -200% 0; }
+
+  100% { background-position: 200% 0; }
+
+}
+
+/* Efecto de respiración (glow) */
+
+@keyframes glowPulse {
+
+  0% {
+
+    text-shadow: 0 0 10px rgba(255, 120, 230, 0.35),
+
+                 0 0 18px rgba(177, 120, 255, 0.25);
+
+    transform: scale(1);
+
+  }
+
+  50% {
+
+    text-shadow: 0 0 18px rgba(255, 120, 230, 0.55),
+
+                 0 0 30px rgba(177, 120, 255, 0.45);
+
+    transform: scale(1.05);
+
+  }
+
+  100% {
+
+    text-shadow: 0 0 10px rgba(255, 120, 230, 0.35),
+
+                 0 0 18px rgba(177, 120, 255, 0.25);
+
+    transform: scale(1);
+
+  }
+
+}
+
