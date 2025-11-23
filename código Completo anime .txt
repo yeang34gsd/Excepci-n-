@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería Estilo Pinterest</title>
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --text-color: #333;
+      --card-bg: white;
+      --nav-bg: white;
+      --modal-bg: white;
+      --search-bg: white;
+      --border-color: #eee;
+      --shadow-color: rgba(0,0,0,0.1);
+      --top-bar-bg: white;
+      --active-color:#00BFFF ;
+      --icon-glow: 0 0 10px rgba(0, 191, 255, 0.7);
+    }
+
+    .dark-mode {
+      --bg-color: #121212;
+      --text-color: #f5f5f5;
+      --card-bg: #1e1e1e;
+      --nav-bg: #1e1e1e;
+      --modal-bg: #1e1e1e;
+      --search-bg: #1e1e1e;
+      --border-color: #333;
+      --shadow-color: rgba(0,0,0,0.3);
+      --top-bar-bg: #1e1e1e;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 15px;
+      background-color: var(--top-bar-bg);
+      box-shadow: 0 2px 5px var(--shadow-color);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .search-active .top-bar,
+    .games-active .top-bar,
+    .game-active .top-bar {
+      display: none;
+    }
+
+    .top-bar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-bar-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      filter: var(--icon-glow);
+      transition: filter 0.3s ease;
+    }
+
+    .top-bar-btn:hover {
+      filter: brightness(1.2) var(--icon-glow);
+    }
+
+    .top-bar-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 10px;
+      justify-items: center;
+      flex-grow: 1;
+      margin-top: 10px;
+    }
+
+    .image-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px var(--shadow-color);
+      background-color: var(--card-bg);
+    }
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .image:hover {
+      transform: scale(1.02);
+    }
+
+    .like-icon {
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      width: 30px;
+      height: 30px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10;
+      filter: var(--icon-glow);
+    }
+
+    .like-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #555;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .liked .like-icon svg {
+      fill: red;
+      stroke: red;
+    }
+
+    .spacer {
+      height: 50px;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background: var(--modal-bg);
+      padding: 20px;
+      border-radius: 10px;
+      max-height: 90vh;
+      overflow-y: auto;
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+    }
+
+    .modal-img {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Estilos para los botones del modal */
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .modal-btn {
+      display: flex;
+      align-items: center;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .download-btn:hover {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .lens-btn:hover {
+      background-color: #4285F4;
+      color: white;
+    }
+
+    .close-btn:hover {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .modal-btn-icon {
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+    }
+
+    /* Efectos de modo oscuro para los botones */
+    .dark-mode .modal-btn {
+      filter: drop-shadow(0 0 5px rgba(135, 206, 235, 0.5));
+    }
+
+    .dark-mode .download-btn:hover {
+      filter: drop-shadow(0 0 8px rgba(76, 175, 80, 0.7));
+    }
+
+    .dark-mode .lens-btn:hover {
+      filter: drop-shadow(0 0 8px rgba(66, 133, 244, 0.7));
+    }
+
+    .dark-mode .close-btn:hover {
+      filter: drop-shadow(0 0 8px rgba(244, 67, 54, 0.7));
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    .related-images {
+      margin-top: 20px;
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 15px;
+    }
+
+    .related-images h3 {
+      margin-bottom: 10px;
+      text-align: center;
+      position: sticky;
+      left: 0;
+    }
+
+    .related-images-container {
+      display: flex;
+      gap: 10px;
+      padding: 0 10px;
+    }
+
+    .related-image-container {
+      min-width: 100px;
+      height: 120px;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .related-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .related-images::-webkit-scrollbar {
+      height: 5px;
+    }
+
+    .related-images::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 5px;
+    }
+
+    .related-images::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    .settings-menu {
+      position: fixed;
+      top: 60px;
+      right: 15px;
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px var(--shadow-color);
+      padding: 10px;
+      z-index: 999;
+      display: none;
+    }
+
+    .settings-menu.show {
+      display: block;
+    }
+
+    .settings-option {
+      padding: 10px 15px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    .settings-option:hover {
+      background-color: var(--border-color);
+    }
+
+    .settings-option-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      filter: var(--icon-glow);
+    }
+
+    .bottom-nav {
+      background-color: var(--nav-bg);
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 2px 0;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      box-shadow: 0 -2px 5px var(--shadow-color);
+    }
+
+    .nav-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-color);
+      text-decoration: none;
+      font-size: 0.8em;
+      cursor: pointer;
+      padding: 5px 10px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .nav-icon.active {
+      color: var(--active-color);
+    }
+
+    .nav-icon.active::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background-color: var(--active-color);
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-icon .custom-icon {
+      filter: var(--icon-glow);
+      transition: filter 0.3s ease;
+    }
+
+    .nav-icon.active .custom-icon {
+      filter: brightness(1.2) var(--icon-glow);
+    }
+
+    .custom-icon {
+      width: 24px;
+      height: 24px;
+      margin-bottom: 5px;
+    }
+
+    #likes-container {
+      display: none;
+      margin-top: 49px;
+      padding: 6px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 97%;
+      height: calc(100% - 60px);
+      background: var(--card-bg);
+      z-index: 998;
+      overflow-y: auto;
+    }
+
+    #likes-container h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      text-align: center;
+      color: var(--text-color);
+    }
+
+    .liked-images-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .liked-image-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px var(--shadow-color);
+    }
+
+    .liked-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    #search-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 60px);
+      background: var(--search-bg);
+      z-index: 997;
+      padding: 15px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    #search-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #search-box {
+      flex-grow: 1;
+      padding: 12px 15px;
+      font-size: 16px;
+      border: none;
+      background: var(--bg-color);
+      border-radius: 20px;
+      margin-right: 10px;
+      color: var(--text-color);
+    }
+
+    .search-back-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px;
+      filter: var(--icon-glow);
+    }
+
+    .cancel-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .search-section {
+      margin-bottom: 25px;
+    }
+
+    .search-section-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+
+    .search-categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .search-category {
+      background: var(--bg-color);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .search-category:hover {
+      background: var(--border-color);
+    }
+
+    .search-show-more {
+      color: var(--text-color);
+      font-size: 14px;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .search-show-more::after {
+      content: "✓";
+      margin-left: 5px;
+    }
+
+    .search-divider {
+      height: 1px;
+      background: var(--border-color);
+      margin: 20px 0;
+    }
+
+    .search-recommended-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: var(--text-color);
+    }
+
+    #games-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 60px);
+      background: var(--card-bg);
+      z-index: 996;
+      padding: 15px;
+      box-sizing: border-box;
+      overflow-y: auto;
+    }
+
+    #games-container h2 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      text-align: center;
+      color: var(--text-color);
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .game-container {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      border-radius: 5px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px var(--shadow-color);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .game-container:hover {
+      transform: scale(1.03);
+    }
+
+    .game-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .game-title {
+      position: absolute;
+      bottom: 0px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      color: white;
+      text-shadow: 0 0 5px black;
+      padding: 5px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    }
+
+    #game-screen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f5f5f5;
+      z-index: 1001;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #game-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #back-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 1002;
+      filter: var(--icon-glow);
+    }
+
+    #back-button img {
+      width: 30px;
+      height: 30px;
+    }
+
+    #game-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 10px;
+    }
+
+    /* Efecto de brillo para todos los botones */
+    button, .nav-icon, .settings-option, .search-category {
+      transition: filter 0.3s ease;
+    }
+
+    button:hover, .nav-icon:hover, .settings-option:hover, .search-category:hover {
+      filter: brightness(1.2) var(--icon-glow);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Estilos base (sin brillo) */
+    .top-bar-btn img,
+    .nav-icon img,
+    .settings-option img,
+    .like-icon,
+    .close-btn img,
+    .search-back-button img,
+    .custom-icon,
+    .settings-option-icon,
+    .top-bar-icon,
+    .cancel-icon,
+    .close-icon {
+      transition: filter 0.3s ease;
+    }
+
+    /* Efecto solo en modo oscuro */
+    .dark-mode .top-bar-btn img,
+    .dark-mode .nav-icon img,
+    .dark-mode .settings-option img,
+    .dark-mode .like-icon,
+    .dark-mode .close-btn img,
+    .dark-mode .search-back-button img,
+    .dark-mode .custom-icon,
+    .dark-mode .settings-option-icon,
+    .dark-mode .top-bar-icon,
+    .dark-mode .cancel-icon,
+    .dark-mode .close-icon {
+      filter: drop-shadow(0 0 8px rgba(0, 191, 255, 0.8));
+    }
+
+    /* Efecto hover solo en modo oscuro */
+    .dark-mode .top-bar-btn:hover img,
+    .dark-mode .nav-icon:hover img,
+    .dark-mode .settings-option:hover img,
+    .dark-mode .like-icon:hover,
+    .dark-mode .close-btn:hover img,
+    .dark-mode .search-back-button:hover img,
+    .dark-mode .nav-icon.active img {
+      filter: drop-shadow(0 0 12px rgba(0, 191, 255, 1)) brightness(1.2);
+    }
+
+    /* Estilos para el modo juego activo */
+    .game-active {
+      overflow: hidden;
+    }
+
+    #game-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 1000;
+      display: none;
+    }
+
+    #game-iframe-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      overflow: hidden;
+    }
+
+    #game-iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+    }
+
+    /* Estilo para el botón de retroceso */
+    #back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(5px);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.1);
+    }
+
+    #back-button:active {
+      transform: scale(0.95);
+    }
+
+    #back-button svg {
+      width: 24px;
+      height: 24px;
+      fill: white;
+    }
+
+    /* Estilo para el estado de carga */
+    .loading-state {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      font-family: Arial, sans-serif;
+      z-index: 1002;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 15px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      font-size: 16px;
+      margin-top: 10px;
+    }
+
+    /* Ajustes para modo oscuro */
+    .dark-mode #game-screen {
+      background: #121212;
+    }
+
+    .dark-mode #back-button {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .dark-mode #back-button:hover {
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .dark-mode #back-button svg {
+      fill: #fff;
+    }
+
+    /* ===== ESTILOS PARA MODO OSCURO - BRILLO PERMANENTE ===== */
+    .dark-mode button,
+    .dark-mode .nav-icon,
+    .dark-mode .settings-option,
+    .dark-mode .search-category,
+    .dark-mode .like-icon,
+    .dark-mode .game-container,
+    .dark-mode .search-top-button,
+    .dark-mode .profile-button,
+    .dark-mode .home-button,
+    .dark-mode .games-button,
+    .dark-mode .search-back-button,
+    .dark-mode .back-button,
+    .dark-mode .settings-option-icon,
+    .dark-mode .top-bar-icon,
+    .dark-mode .cancel-icon,
+    .dark-mode .close-icon,
+    .dark-mode button:active,
+    .dark-mode button:focus,
+    .dark-mode button.active {
+      filter: drop-shadow(0 0 8px rgba(135, 206, 235, 0.7)) brightness(1.05) !important;
+      transition: all 0.3s ease;
+    }
+
+    /* Efecto hover adicional en modo oscuro (más intenso) */
+    .dark-mode button:hover,
+    .dark-mode .nav-icon:hover,
+    .dark-mode .settings-option:hover,
+    .dark-mode .search-category:hover,
+    .dark-mode .like-icon:hover,
+    .dark-mode .game-container:hover,
+    .dark-mode .search-top-button:hover,
+    .dark-mode .profile-button:hover,
+    .dark-mode .home-button:hover,
+    .dark-mode .games-button:hover,
+    .dark-mode .search-back-button:hover,
+    .dark-mode .back-button:hover,
+    .dark-mode .settings-option-icon:hover,
+    .dark-mode .top-bar-icon:hover,
+    .dark-mode .cancel-icon:hover,
+    .dark-mode .close-icon:hover {
+      filter: drop-shadow(0 0 12px rgba(135, 206, 235, 0.9)) brightness(1.15) !important;
+      transform: scale(1.05);
+    }
+
+    /* Estilo especial para botones activos/seleccionados */
+    .dark-mode button.active,
+    .dark-mode .nav-icon.active {
+      filter: drop-shadow(0 0 10px rgba(135, 206, 235, 0.8)) brightness(1.1) !important;
+      animation: pulse-glow 2s infinite;
+    }
+
+    /* Animación de pulsación para botones activos */
+    @keyframes pulse-glow {
+      0% { filter: drop-shadow(0 0 8px rgba(135, 206, 235, 0.7)) brightness(1.05); }
+      50% { filter: drop-shadow(0 0 12px rgba(135, 206, 235, 0.9)) brightness(1.15); }
+      100% { filter: drop-shadow(0 0 8px rgba(135, 206, 235, 0.7)) brightness(1.05); }
+    }
+
+    /* Contenedores de juego */
+    .dark-mode .game-container {
+      box-shadow: 0 0 15px rgba(135, 206, 235, 0.5);
+    }
+
+    .dark-mode .game-container:hover {
+      box-shadow: 0 0 20px rgba(135, 206, 235, 0.7);
+    }
+
+    /* Iconos de corazón (like) */
+    .dark-mode .like-icon {
+      filter: drop-shadow(0 0 6px rgba(135, 206, 235, 0.6)) !important;
+    }
+
+    .dark-mode .like-icon:hover {
+      filter: drop-shadow(0 0 10px rgba(135, 206, 235, 0.8)) brightness(1.2) !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra superior -->
+  <div class="top-bar">
+ 
+   <h1 class="app-title">AnimeRoom</h1>
+    <div class="top-bar-actions">
+      <button class="top-bar-btn" id="search-top-button">
+        <img src="https://cdn-icons-png.flaticon.com/128/3917/3917132.png" class="top-bar-icon" alt="Buscar">
+      </button>
+      <button class="top-bar-btn" id="settingsBtn">
+        <img src="https://cdn-icons-png.flaticon.com/128/3917/3917058.png" class="top-bar-icon" alt="Configuración">
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú de configuración -->
+  <div class="settings-menu" id="settingsMenu">
+    <div class="settings-option" id="darkModeToggle">
+      <img src="https://cdn-icons-png.flaticon.com/128/3916/3916628.png" class="settings-option-icon" alt="Modo oscuro">
+      <span>Modo oscuro</span>
+    </div>
+    <div class="settings-option" id="clearCache">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917378.png" class="settings-option-icon" alt="Limpiar caché">
+      <span>Limpiar favoritos</span>
+    </div>
+  </div>
+
+  <!-- Galería principal -->
+  <div class="container" id="image-container"></div>
+  <div class="spacer" id="spacer"></div>
+  
+  <!-- Modal para imágenes ampliadas -->
+  <div id="modal" class="modal" style="display: none;">
+    <div class="modal-content" id="modalContent">
+      <img id="modalImage" class="modal-img" src="" alt="Imagen ampliada" />
+      
+      <div class="modal-buttons">
+        <button class="modal-btn download-btn" onclick="downloadImage()">
+          <img src="https://cdn-icons-png.flaticon.com/128/3917/3917330.png" class="modal-btn-icon" alt="Descargar">
+          <span>Descargar</span>
+        </button>
+        
+        <button class="modal-btn lens-btn" onclick="searchWithGoogleLens()">
+          <img src="https://cdn-icons-png.flaticon.com/128/281/281764.png" class="modal-btn-icon" alt="Google Lens">
+          <span>Buscar</span>
+        </button>
+        
+        <button class="modal-btn close-btn" onclick="closeModal()">
+          <img src="https://cdn-icons-png.flaticon.com/128/3917/3917161.png" class="modal-btn-icon" alt="Cerrar">
+          <span>Cerrar</span>
+        </button>
+      </div>
+      
+      <div class="related-images" id="relatedImages">
+        <h3>Imágenes relacionadas</h3>
+        <div class="related-images-container" id="relatedImagesContainer"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Sección de búsqueda -->
+  <div id="search-container">
+    <div id="search-header">
+      <input type="text" id="search-box" placeholder="Buscar por texto...">
+      <button class="search-back-button" id="search-back-button">
+        <img src="https://cdn-icons-png.flaticon.com/128/3916/3916931.png" class="cancel-icon" alt="Cancelar">
+      </button>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-section-title">Categoría</div>
+     
+      <div class="search-categories">
+        <div class="search-category">Couple</div>
+        <div class="search-category">Lucky</div>
+        <div class="search-category">Anime</div>
+        <div class="search-category">Magic Fluids</div>
+        <div class="search-category">Love</div>
+        <div class="search-category">Pink</div>
+        <div class="search-category">Cute</div>
+      </div>
+      <div class="search-show-more">Ver más</div>
+    </div>
+    
+    <div class="search-divider"></div>
+    
+    <div class="search-section">
+      <div class="search-recommended-title">Recomendado para ti</div>
+      <div id="search-results" class="container"></div>
+    </div>
+  </div>
+  
+  <!-- Sección de juegos -->
+  <div id="games-container">
+    <h2>Juegos</h2>
+    <div class="games-grid" id="games-grid">
+      <!-- Juego 1: Tic-Tac-Toe -->
+      <div class="game-container" id="tic-tac-toe">
+        <img src="https://cdn-icons-png.flaticon.com/128/14244/14244160.png" class="game-image" alt="Tic-Tac-Toe">
+        <div class="game-title">Tic-Tac-Toe</div>
+      </div>
+      
+      <!-- Juego 2: Ajedrez -->
+      <div class="game-container" id="chess">
+        <img src="https://cdn-icons-png.flaticon.com/128/686/686589.png" class="game-image" alt="Ajedrez">
+        <div class="game-title">Ajedrez</div>
+      </div>
+      
+      <!-- Juego 3: Póker -->
+      <div class="game-container" id="poker">
+        <img src="https://cdn-icons-png.flaticon.com/128/2693/2693367.png" class="game-image" alt="Póker">
+        <div class="game-title">Póker</div>
+      </div>
+      
+      <!-- Juego 4: Damas -->
+      <div class="game-container" id="checkers">
+        <img src="https://cdn-icons-png.flaticon.com/128/808/808439.png" class="game-image" alt="Damas">
+        <div class="game-title">Damas</div>
+      </div>
+      
+      <!-- Juego 5: Sudoku -->
+      <div class="game-container" id="sudoku">
+        <img src="https://cdn-icons-png.flaticon.com/128/2503/2503183.png" class="game-image" alt="Sudoku">
+        <div class="game-title">Sudoku</div>
+      </div>
+      
+      <!-- Juego 6: Memoria -->
+      <div class="game-container" id="memory">
+        <img src="https://cdn-icons-png.flaticon.com/128/888/888954.png" class="game-image" alt="Memoria">
+        <div class="game-title">Memoria</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pantalla de juego (se muestra cuando se selecciona un juego) -->
+  <div id="game-screen" class="no-dark-mode">
+    <button id="back-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917759.png" alt="Volver">
+    </button>
+    <div id="game-content">
+      <!-- Espacio para el código del juego -->
+      <div id="game-iframe-container">
+        <!-- Aquí se cargará el juego seleccionado -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Navegación inferior -->
+  <nav class="bottom-nav">
+    <a href="#" class="nav-icon active" id="home-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917033.png" class="custom-icon" alt="Inicio">
+      Inicio
+    </a>
+    <a href="#" class="nav-icon" id="games-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/17589/17589142.png" class="custom-icon" alt="Juegos">
+      Juegos
+    </a>
+    <a href="#" class="nav-icon" id="profile-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917706.png" class="custom-icon" alt="Perfil">
+      Perfil
+    </a>
+  </nav>
+  
+  <!-- Sección de favoritos -->
+  <div id="likes-container">
+    <h2>        </h2>
+    <div class="liked-images-grid" id="liked-images"></div>
+  </div>
+
+  <script>
+    // Elementos del DOM
+    const container = document.getElementById('image-container');
+    const spacer = document.getElementById('spacer');
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const profileButton = document.getElementById('profile-button');
+    const homeButton = document.getElementById('home-button');
+    const gamesButton = document.getElementById('games-button');
+    const searchTopButton = document.getElementById('search-top-button');
+    const searchContainer = document.getElementById('search-container');
+    const searchBox = document.getElementById('search-box');
+    const searchResults = document.getElementById('search-results');
+    const searchBackButton = document.getElementById('search-back-button');
+    const likesContainer = document.getElementById('likes-container');
+    const likedImagesContainer = document.getElementById('liked-images');
+    const relatedImagesContainer = document.getElementById('relatedImagesContainer');
+    const gamesContainer = document.getElementById('games-container');
+    const gamesGrid = document.getElementById('games-grid');
+    const gameScreen = document.getElementById('game-screen');
+    const backButton   =
+
+document.getElementById('back-button');
+    const gameIframeContainer = document.getElementById('game-iframe-container');
+    const searchCategories = document.querySelectorAll('.search-category');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsMenu = document.getElementById('settingsMenu');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const clearCache = document.getElementById('clearCache');
+
+    // Variables de estado
+    let likedImages = JSON.parse(localStorage.getItem('likedImages')) || [];
+    let currentGame = null;
+    let isPreviewVisible = false;
+    let isContentLoaded = false;
+    let currentModalImageUrl = ''; // Variable para la imagen actual en el modal
+
+    // Modo oscuro
+    const darkModeEnabled = localStorage.getItem('darkMode') === 'true';
+    if (darkModeEnabled) {
+      document.body.classList.add('dark-mode');
+    }
+
+    // Datos de imágenes y juegos
+    const images = [
+      
+
+{ url: 'https://i.pinimg.com/736x/ac/5c/02/ac5c02400375cfbb49c2951890e07c6b.jpg', keywords: [], id: 'img41' },
+{ url: 'https://i.pinimg.com/736x/86/6a/16/866a16233beaf09d361f3fccee558c29.jpg', keywords: [], id: 'img42' },
+      { url: 'https://i.pinimg.com/736x/9f/d5/c1/9fd5c1b1f3e50aeb930ebc644744d91a.jpg', keywords: ['pájaro', 'animal', 'love'], id: 'img10' },
+      ];
+      
+      
+     
+    const games = [
+      { 
+        id: 'tic-tac-toe',
+        name: 'Tic-Tac-Toe', 
+        icon: 'https://i.pinimg.com/736x/eb/59/27/eb5927af40fb5834da139984c9cd50ae.jpg',
+        url: 'https://gist.githubusercontent.com/yeang34gsd/4f91e253d743a18b4f40307e393d65d8/raw/3e176cdcbf0b0c0a31dfd0445fdec14b6b0b19e3/Index.html'
+      },
+      { 
+        id: 'memory',
+        name: 'CARTAS', 
+        icon: 'https://i.pinimg.com/736x/9c/2c/01/9c2c010114adf18e23d7006b4aed3dcf.jpg',
+        url: 'https://gist.githubusercontent.com/yeang34gsd/890610f9c2dd2ad3bff561001834dadf/raw/bcafa79bb1c9449f02b7187bae0a9eadc785f305/Mi%2520c%25C3%25B3digo.html'
+      },
+      { 
+        id: 'memorama',
+        name: 'Memorama', 
+        icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+        url: 'https://gist.githubusercontent.com/yeang34gsd/77ba9de790f7639fe66ac3153e3ae214/raw/114fc1fe25e6f9c8f0dfaadd731fa131d11048cd/Memorama%2520index.html'
+      },
+      { 
+        id: 'ping-pong',
+        name: 'ping-pong', 
+        icon: 'https://i.pinimg.com/736x/08/2e/56/082e56a5316bb69e1da04f2278b42806.jpg',
+        url: ' https://gist.githubusercontent.com/yeang34gsd/1d337fe0ba116127eba90ed304fa2a68/raw/a0b46330bab1fa99d56128dbd37854f0c8292ba2/Ping-pong%2520index.html'
+      },
+      { 
+        id: 'snake',
+        name: 'snake', 
+        icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+        url: 'https://gist.githubusercontent.com/yeang34gsd/2bfeba5f56a7610eeab72dfcaeb2630a/raw/799762067ba0b8a3ea97a071f43ab7b7ad98a707/%25F0%259F%2590%258D%2520index.html'
+      },
+      { 
+        id: 'Neon Evasion',
+        name: 'Neon Evasion', 
+        icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+        url: 'https://gist.githubusercontent.com/yeang34gsd/b635008040954b286ab54b3bc7cc1e67/raw/53c22ad63f6908aeb2ecbb1affe79d09090f3e3b/Esquivar%2520index.html'
+      },
+      { 
+        id: 'Neon Evasion',
+        name: 'Neon Evasion', 
+        icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+        url: 'https://gist.githubusercontent.com/yeang34gsd/3dfdee6e5fb9176199e4a9490dab836d/raw/3511e50e64504630bec6e8c82e518078c6cdb166/Ball%2520Sort%2520Puzzle%2520index.html'
+      },
+      { 
+        id: '🌸 Jardín Flotante ',
+        name: '🌸 Jardín Flotante', 
+        icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+        url: 'https://gist.githubusercontent.com/yeang34gsd/ceacdbc206e7e7bdaf1fa67a9f4caffd/raw/91025f1b162c9ac3b3626d8a5b3bebf3340d3a31/%25F0%259F%258C%25B8%2520Jard%25C3%25ADn%2520Flotante%2520index.html'
+      }
+    ];
+    
+    // Funciones principales
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function toggleLike(event, imageId, imageUrl) {
+      event.stopPropagation();
+      const imageContainer = event.target.closest('.image-container');
+      
+      const isLiked = likedImages.some(item => item.id === imageId);
+      if (isLiked) {
+        likedImages = likedImages.filter(item => item.id !== imageId);
+        imageContainer.classList.remove('liked');
+      } else {
+        likedImages.push({ id: imageId, url: imageUrl });
+        imageContainer.classList.add('liked');
+      }
+      localStorage.setItem('likedImages', JSON.stringify(likedImages));
+      updateLikedImagesDisplay();
+    }
+
+    function generateImage(imageData, targetContainer = container) {
+      const imageContainer = document.createElement('div');
+      imageContainer.classList.add('image-container');
+      const img = document.createElement('img');
+      img.src = imageData.url;
+      img.alt = "Imagen";
+      img.classList.add('image');
+      img.addEventListener('click', () => openModal(imageData));
+      imageContainer.appendChild(img);
+      const likeButton = document.createElement('div');
+      likeButton.classList.add('like-icon');
+      likeButton.innerHTML = `
+        <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+        </svg>
+        `;
+      likeButton.addEventListener('click', (event) => toggleLike(event, imageData.id, imageData.url));
+      imageContainer.appendChild(likeButton);
+      if (likedImages.some(item => item.id === imageData.id)) {
+        imageContainer.classList.add('liked');
+      }
+      targetContainer.appendChild(imageContainer);
+    }
+
+    function generateGame(gameData) {
+      const gameContainer = document.createElement('div');
+      
+  gameContainer.classList.add('game-container');
+      gameContainer.id = gameData.id;
+      const img = document.createElement('img');
+      img.src = gameData.icon;
+      img.alt = gameData.name;
+      img.classList.add('game-image');
+      gameContainer.appendChild(img);
+      const gameName = document.createElement('div');
+      gameName.textContent = gameData.name;
+      gameName.classList.add('game-title');
+      gameContainer.appendChild(gameName);
+      gameContainer.addEventListener('click', () => launchGame(gameData));
+      return gameContainer;
+    }
+
+    function showLoadingState() {
+      gameIframeContainer.innerHTML = `
+        <div style="
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100%;
+          font-family: Arial, sans-serif;
+          color: #555;
+        ">
+          <div class="spinner" style="
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #4285F4;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+          "></div>
+          <div>Cargando juego...</div>
+        </div>
+        <style>
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        </style>
+      `;
+    }
+
+    function loadGameFromURL(url) {
+      showLoadingState();
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          gameIframeContainer.innerHTML = `
+            <iframe 
+              srcdoc="${data.replace(/"/g, '&quot;')}" 
+              style="width:100%; height:100%; border:none;"
+            ></iframe>
+          `;
+        })
+        .catch(error => {
+          console.error('Error al cargar el juego:', error);
+          gameIframeContainer.innerHTML = `
+            <div style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+              font-family: Arial, sans-serif;
+              color: #EA4335;
+            ">
+              <div>Error al cargar el juego. Intenta nuevamente.</div>
+            </div>
+          `;
+        });
+    }
+
+    function launchGame(gameData) {
+      currentGame = gameData;
+      
+      // Ocultar otros contenedores
+      container.style.display = 'none';
+      spacer.style.display = 'none';
+      likesContainer.style.display = 'none';
+      searchContainer.style.display = 'none';
+      gamesContainer.style.display = 'none';
+      gameScreen.style.display = 'block';
+      document.body.classList.add('game-active');
+      
+      // Cargar el juego desde la URL
+      loadGameFromURL(gameData.url);
+    }
+
+    function exitGame() {
+      gameScreen.style.display = 'none';
+      document.body.classList.remove('game-active');
+      
+      if (gamesContainer.style.display === 'none') {
+        showGames();
+      } else {
+        showGallery();
+      }
+    }
+
+    function updateLikedImagesDisplay() {
+      likedImagesContainer.innerHTML = '';
+      likedImages.forEach(likedImage => {
+        const imageData = images.find(img => img.id === likedImage.id);
+        if (imageData) {
+          generateImage(imageData, likedImagesContainer);
+        }
+      });
+    }
+
+    function loadGames() {
+      gamesGrid.innerHTML = '';
+      games.forEach(game => {
+        gamesGrid.appendChild(generateGame(game));
+      });
+    }
+
+    // Funciones de navegación
+    function showGallery() {
+      container.style.display = 'grid';
+      spacer.style.display = 'block';
+      likesContainer.style.display = 'none';
+      searchContainer.style.display = 'none';
+      gamesContainer.style.display = 'none';
+      gameScreen.style.display = 'none';
+      settingsMenu.classList.remove('show');
+      document.body.classList.remove('search-active');
+      document.body.classList.remove('games-active');
+      document.body.classList.remove('game-active');
+      
+      homeButton.classList.add('active');
+      profileButton.classList.remove('active');
+      gamesButton.classList.remove('active');
+    }
+
+    function showLikes() {
+      container.style.display = 'none';
+      spacer.style.display = 'none';
+      likesContainer.style.display = 'block';
+      searchContainer.style.display = 'none';
+      gamesContainer.style.display = 'none';
+      gameScreen.style.display = 'none';
+      settingsMenu.classList.remove('show');
+      document.body.classList.remove('search-active');
+      document.body.classList.remove('games-active');
+      document.body.classList.remove('game-active');
+      
+      profileButton.classList.add('active');
+      homeButton.classList.remove('active');
+      gamesButton.classList.remove('active');
+    }
+
+    function showGames() {
+      container.style.display = 'none';
+      spacer.style.display = 'none';
+      likesContainer.style.display = 'none';
+      searchContainer.style.display = 'none';
+      gamesContainer.style.display = 'block';
+      gameScreen.style.display = 'none';
+      settingsMenu.classList.remove('show');
+      document.body.classList.remove('search-active');
+      document.body.classList.add('games-active');
+      document.body.classList.remove('game-active');
+      
+      gamesButton.classList.add('active');
+      homeButton.classList.remove('active');
+      profileButton.classList.remove('active');
+      
+      loadGames();
+    }
+
+    function showSearch() {
+      container.style.display = 'none';
+      spacer.style.display = 'none';
+      likesContainer.style.display = 'none';
+      searchContainer.style.display = 'block';
+      gamesContainer.style.display = 'none';
+      gameScreen.style.display = 'none';
+      settingsMenu.classList.remove('show');
+      document.body.classList.add('search-active');
+      document.body.classList.remove('games-active');
+      document.body.classList.remove('game-active');
+      
+      homeButton.classList.remove('active');
+      profileButton.classList.remove('active');
+      gamesButton.classList.remove('active');
+      
+      searchBox.focus();
+      showRecommendedImages();
+    }
+
+    function showRecommendedImages() {
+      searchResults.innerHTML = '';
+      searchResults.style.display = 'grid';
+      const recommended = shuffleArray([...images]).slice(0, 6);
+      recommended.forEach(img => {
+        generateImage(img, searchResults);
+      });
+    }
+
+    function showRelatedImages(currentImage) {
+      relatedImagesContainer.innerHTML = '';
+      const related = images.filter(img => 
+        img.id !== currentImage.id && 
+        currentImage.keywords.some(keyword => img.keywords.includes(keyword))
+      );
+      
+      related.forEach(img => {
+        const container = document.createElement('div');
+        container.classList.add('related-image-container');
+        
+        const relatedImg = document.createElement('img');
+        relatedImg.src = img.url;
+        relatedImg.alt = "Imagen relacionada";
+        relatedImg.classList.add('related-image');
+        relatedImg.addEventListener('click', () => {
+          openModal(img);
+        });
+        
+        container.appendChild(relatedImg);
+        relatedImagesContainer.appendChild(container);
+      });
+    }
+
+    function performSearch() {
+      const query = searchBox.value.toLowerCase();
+      searchResults.innerHTML = '';
+      
+      if (query.trim() === '') {
+        showRecommendedImages();
+        return;
+      }
+      
+      const results = images.filter(img => 
+        img.keywords.some(keyword => keyword.toLowerCase().includes(query))
+      );
+      
+      searchResults.style.display = 'grid';
+      results.forEach(img => {
+        generateImage(img, searchResults);
+      });
+    }
+
+    function openModal(imageData) {
+      modal.style.display = 'flex';
+      modalImage.src = imageData.url;
+      currentModalImageUrl = imageData.url; // Guardar la URL para descargar/buscar
+      document.body.classList.add('modal-open');
+      showRelatedImages(imageData);
+      settingsMenu.classList.remove('show');
+    }
+    
+    function closeModal() {
+      modal.style.display = 'none';
+      document.body.classList.remove('modal-open');
+    }
+
+    // Funciones para los nuevos botones
+    function downloadImage() {
+      if (!currentModalImageUrl) {
+        console.error('No hay imagen para descargar');
+        return;
+      }
+      
+      try {
+        // Crear un enlace temporal para descargar
+        const link = document.createElement('a');
+        link.href = currentModalImageUrl;
+        
+        // Obtener el nombre del archivo de la URL o generar uno
+        const fileName = currentModalImageUrl.split('/').pop() || 'imagen-descargada';
+        link.download = fileName;
+        
+        // Simular clic en el enlace
+        document.body.appendChild(link);
+
+link.click();
+        document.body.removeChild(link);
+        
+        console.log('Descargando imagen:', fileName);
+      } catch (error) {
+        console.error('Error al descargar la imagen:', error);
+        alert('Error al descargar la imagen. Intenta nuevamente.');
+      }
+    }
+
+    function searchWithGoogleLens() {
+      if (!currentModalImageUrl) {
+        console.error('No hay imagen para buscar');
+        return;
+      }
+      
+      try {
+        // Crear URL de Google Lens con la imagen
+        const googleLensUrl = `https://lens.google.com/uploadbyurl?url=${encodeURIComponent(currentModalImageUrl)}`;
+        
+        // Abrir en una nueva pestaña
+        window.open(googleLensUrl, '_blank');
+        
+        console.log('Buscando con Google Lens:', currentModalImageUrl);
+      } catch (error) {
+        console.error('Error al abrir Google Lens:', error);
+        alert('Error al abrir Google Lens. Intenta nuevamente.');
+      }
+    }
+
+    // Configuración
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+      
+      // Forzar repintado para asegurar la transición
+      document.body.style.display = 'none';
+      document.body.offsetHeight; // Trigger reflow
+      document.body.style.display = '';
+    }
+
+    function clearFavorites() {
+      likedImages = [];
+      localStorage.setItem('likedImages', JSON.stringify(likedImages));
+      updateLikedImagesDisplay();
+      settingsMenu.classList.remove('show');
+      alert('Favoritos limpiados correctamente');
+    }
+
+    // Event listeners
+    settingsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      settingsMenu.classList.toggle('show');
+    });
+
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+
+    clearCache.addEventListener('click', clearFavorites);
+
+    document.addEventListener('click', (e) => {
+      if (!settingsMenu.contains(e.target) && e.target !== settingsBtn) {
+        settingsMenu.classList.remove('show');
+      }
+    });
+
+    searchTopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      showSearch();
+    });
+
+    profileButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      showLikes();
+    });
+
+    gamesButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      showGames();
+    });
+
+    homeButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      showGallery();
+    });
+
+    searchBackButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      showGallery();
+    });
+
+    backButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      exitGame();
+    });
+
+    searchBox.addEventListener('input', performSearch);
+
+    searchCategories.forEach(category => {
+      category.addEventListener('click', (e) => {
+        searchBox.value = e.target.textContent;
+        performSearch();
+      });
+    });
+
+    // Inicialización
+    shuffleArray(images);
+    images.forEach(image => generateImage(image));
+
+    function checkIfSpacerVisible() {
+      const spacerPosition = spacer.getBoundingClientRect();
+      if (spacerPosition.top <= window.innerHeight) {
+        shuffleArray(images);
+        images.forEach(image => generateImage(image));
+      }
+    }
+
+    window.addEventListener('scroll', checkIfSpacerVisible);
+    checkIfSpacerVisible();
+    updateLikedImagesDisplay();
+    showRecommendedImages();
+    loadGames();
+
+    // Aplicar efectos de brillo
+    function applyGlowEffects() {
+      document.querySelectorAll('.custom-icon, .settings-option-icon, .top-bar-icon, .cancel-icon, .close-icon').forEach(icon => {
+        icon.style.filter = 'var(--icon-glow)';
+      });
+      
+      document.querySelectorAll('button, .nav-icon, .settings-option, .search-category').forEach(element => {
+        element.addEventListener('mouseenter', () => {
+          element.style.filter = 'var(--icon-glow) brightness(1.2)';
+        });
+        element.addEventListener('mouseleave', () => {
+          element.style.filter = element.classList.contains('active') ? 'var(--icon-glow)' : 'none';
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', applyGlowEffects);
+  </script>
+</body>
+</html>
