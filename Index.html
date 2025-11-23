@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería Estilo Pinterest</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Barra superior -->
+  <div class="top-bar">
+    <h1 class="app-title">AnimeRoom</h1>
+    <div class="top-bar-actions">
+      <button class="top-bar-btn" id="search-top-button">
+        <img src="https://cdn-icons-png.flaticon.com/128/3917/3917132.png" class="top-bar-icon" alt="Buscar">
+      </button>
+      <button class="top-bar-btn" id="settingsBtn">
+        <img src="https://cdn-icons-png.flaticon.com/128/3917/3917058.png" class="top-bar-icon" alt="Configuración">
+      </button>
+    </div>
+  </div>
+
+  <!-- Menú de configuración -->
+  <div class="settings-menu" id="settingsMenu">
+    <div class="settings-option" id="darkModeToggle">
+      <img src="https://cdn-icons-png.flaticon.com/128/3916/3916628.png" class="settings-option-icon" alt="Modo oscuro">
+      <span>Modo oscuro</span>
+    </div>
+    <div class="settings-option" id="clearCache">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917378.png" class="settings-option-icon" alt="Limpiar caché">
+      <span>Limpiar favoritos</span>
+    </div>
+  </div>
+
+  <!-- Galería principal -->
+  <div class="container" id="image-container"></div>
+  <div class="spacer" id="spacer"></div>
+  
+  <!-- Modal para imágenes ampliadas -->
+  <div id="modal" class="modal" style="display: none;">
+    <div class="modal-content" id="modalContent">
+      <img id="modalImage" class="modal-img" src="" alt="Imagen ampliada" />
+      
+      <div class="modal-buttons">
+        <button class="modal-btn download-btn" onclick="downloadImage()">
+          <img src="https://cdn-icons-png.flaticon.com/128/3917/3917330.png" class="modal-btn-icon" alt="Descargar">
+          <span>Descargar</span>
+        </button>
+        
+        <button class="modal-btn lens-btn" onclick="searchWithGoogleLens()">
+          <img src="https://cdn-icons-png.flaticon.com/128/281/281764.png" class="modal-btn-icon" alt="Google Lens">
+          <span>Buscar</span>
+        </button>
+        
+        <button class="modal-btn close-btn" onclick="closeModal()">
+          <img src="https://cdn-icons-png.flaticon.com/128/3917/3917161.png" class="modal-btn-icon" alt="Cerrar">
+          <span>Cerrar</span>
+        </button>
+      </div>
+      
+      <div class="related-images" id="relatedImages">
+        <h3>Imágenes relacionadas</h3>
+        <div class="related-images-container" id="relatedImagesContainer"></div>
+      </div>
+      
+      <!-- Sección de comentarios -->
+      <div class="comments-section" id="commentsSection">
+        <h3>Comentarios</h3>
+        <div id="commentBoxContainer"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Sección de búsqueda -->
+  <div id="search-container">
+    <div id="search-header">
+      <input type="text" id="search-box" placeholder="Buscar por texto...">
+      <button class="search-back-button" id="search-back-button">
+        <img src="https://cdn-icons-png.flaticon.com/128/3916/3916931.png" class="cancel-icon" alt="Cancelar">
+      </button>
+    </div>
+    
+    <div class="search-section">
+      <div class="search-section-title">Categoría</div>
+     
+      <div class="search-categories">
+        <div class="search-category">Couple</div>
+        <div class="search-category">Lucky</div>
+        <div class="search-category">Anime</div>
+        <div class="search-category">Magic Fluids</div>
+        <div class="search-category">Love</div>
+        <div class="search-category">Pink</div>
+        <div class="search-category">Cute</div>
+      </div>
+      <div class="search-show-more">Ver más</div>
+    </div>
+    
+    <div class="search-divider"></div>
+    
+    <div class="search-section">
+      <div class="search-recommended-title">Recomendado para ti</div>
+      <div id="search-results" class="container"></div>
+    </div>
+  </div>
+  
+  <!-- Sección de juegos -->
+  <div id="games-container">
+    <h2>Juegos</h2>
+    <div class="games-grid" id="games-grid">
+      <!-- Juego 1: Tic-Tac-Toe -->
+      <div class="game-container" id="tic-tac-toe">
+        <img src="https://cdn-icons-png.flaticon.com/128/14244/14244160.png" class="game-image" alt="Tic-Tac-Toe">
+        <div class="game-title">Tic-Tac-Toe</div>
+      </div>
+      
+      <!-- Juego 2: Ajedrez -->
+      <div class="game-container" id="chess">
+        <img src="https://cdn-icons-png.flaticon.com/128/686/686589.png" class="game-image" alt="Ajedrez">
+        <div class="game-title">Ajedrez</div>
+      </div>
+      
+      <!-- Juego 3: Póker -->
+      <div class="game-container" id="poker">
+        <img src="https://cdn-icons-png.flaticon.com/128/2693/2693367.png" class="game-image" alt="Póker">
+        <div class="game-title">Póker</div>
+      </div>
+      
+      <!-- Juego 4: Damas -->
+      <div class="game-container" id="checkers">
+        <img src="https://cdn-icons-png.flaticon.com/128/808/808439.png" class="game-image" alt="Damas">
+        <div class="game-title">Damas</div>
+      </div>
+      
+      <!-- Juego 5: Sudoku -->
+      <div class="game-container" id="sudoku">
+        <img src="https://cdn-icons-png.flaticon.com/128/2503/2503183.png" class="game-image" alt="Sudoku">
+        <div class="game-title">Sudoku</div>
+      </div>
+      
+      <!-- Juego 6: Memoria -->
+      <div class="game-container" id="memory">
+        <img src="https://cdn-icons-png.flaticon.com/128/888/888954.png" class="game-image" alt="Memoria">
+        <div class="game-title">Memoria</div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Pantalla de juego (se muestra cuando se selecciona un juego) -->
+  <div id="game-screen" class="no-dark-mode">
+    <button id="back-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917759.png" alt="Volver">
+    </button>
+    <div id="game-content">
+      <!-- Espacio para el código del juego -->
+      <div id="game-iframe-container">
+        <!-- Aquí se cargará el juego seleccionado -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Navegación inferior -->
+  <nav class="bottom-nav">
+    <a href="#" class="nav-icon active" id="home-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917033.png" class="custom-icon" alt="Inicio">
+      Inicio
+    </a>
+    <a href="#" class="nav-icon" id="games-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/17589/17589142.png" class="custom-icon" alt="Juegos">
+      Juegos
+    </a>
+    <a href="#" class="nav-icon" id="profile-button">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917706.png" class="custom-icon" alt="Perfil">
+      Perfil
+    </a>
+  </nav>
+  
+  <!-- Sección de favoritos -->
+  <div id="likes-container">
+    <h2>        </h2>
+    <div class="liked-images-grid" id="liked-images"></div>
+  </div>
+
+  <!-- Script de CommentBox -->
+  <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
+  <script src="script.js"></script>
+</body>
+  </html>
