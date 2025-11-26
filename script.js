@@ -54,6 +54,12 @@ const games = [
     url: 'https://gist.githubusercontent.com/yeang34gsd/4f91e253d743a18b4f40307e393d65d8/raw/3e176cdcbf0b0c0a31dfd0445fdec14b6b0b19e3/Index.html'
   },
   { 
+    id: 'anime',
+    name: 'ADIVINA EL ANIME', 
+    icon: 'https://i.pinimg.com/736x/57/39/02/5739029d9b062ab60b1728e3d257b69e.jpg',
+    url: 'https://gist.githubusercontent.com/yeang34gsd/b01516ad3824cb30c72dd98a9450c15c/raw/73196f57b23713d3c1747909c8417d21d71960ea/index.html'
+  },
+  { 
     id: 'memory',
     name: 'CARTAS', 
     icon: 'https://i.pinimg.com/736x/9c/2c/01/9c2c010114adf18e23d7006b4aed3dcf.jpg',
@@ -74,25 +80,25 @@ const games = [
   { 
     id: 'snake',
     name: 'snake', 
-    icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+    icon: 'https://i.pinimg.com/736x/4d/25/fe/4d25fee11314496780182c9f9a438bf8.jpg',
     url: 'https://gist.githubusercontent.com/yeang34gsd/2bfeba5f56a7610eeab72dfcaeb2630a/raw/799762067ba0b8a3ea97a071f43ab7b7ad98a707/%25F0%259F%2590%258D%2520index.html'
   },
   { 
     id: 'Neon Evasion',
     name: 'Neon Evasion', 
-    icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+    icon: 'https://i.pinimg.com/736x/af/72/ec/af72ecb4f337cebe20c29e7dcfa17e29.jpg',
     url: 'https://gist.githubusercontent.com/yeang34gsd/b635008040954b286ab54b3bc7cc1e67/raw/53c22ad63f6908aeb2ecbb1affe79d09090f3e3b/Esquivar%2520index.html'
   },
   { 
     id: 'Neon Evasion',
-    name: 'Neon Evasion', 
-    icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+    name: 'PUZZLES', 
+    icon: 'https://i.pinimg.com/736x/73/6f/7c/736f7cf65c583cfe97cd21974c236714.jpg',
     url: 'https://gist.githubusercontent.com/yeang34gsd/3dfdee6e5fb9176199e4a9490dab836d/raw/3511e50e64504630bec6e8c82e518078c6cdb166/Ball%2520Sort%2520Puzzle%2520index.html'
   },
   { 
     id: '🌸 Jardín Flotante ',
     name: '🌸 Jardín Flotante', 
-    icon: 'https://i.pinimg.com/736x/cd/4d/70/cd4d70b4a3f3e692691408b7cc2a8c4a.jpg',
+    icon: 'https://i.pinimg.com/736x/ba/5f/90/ba5f90d4376a3705218940aeab6671aa.jpg',
     url: 'https://gist.githubusercontent.com/yeang34gsd/ceacdbc206e7e7bdaf1fa67a9f4caffd/raw/91025f1b162c9ac3b3626d8a5b3bebf3340d3a31/%25F0%259F%258C%25B8%2520Jard%25C3%25ADn%2520Flotante%2520index.html'
   }
 ];
