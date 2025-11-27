@@ -601,3 +601,770 @@ function applyGlowEffects() {
 }
 
 window.addEventListener('DOMContentLoaded', applyGlowEffects);
+
+
+
+
+
+
+
+
+
+
+
+// Variables para fondos animados
+let backgroundModal;
+let currentAnimation = null;
+let currentAnimationType = localStorage.getItem('animationType') || 'none';
+let animationIntensity = parseInt(localStorage.getItem('animationIntensity')) || 200;
+let animationSpeed = parseInt(localStorage.getItem('animationSpeed')) || 5;
+
+// Inicializar fondos animados al cargar
+function initializeBackgroundAnimation() {
+  backgroundModal = document.getElementById('background-modal');
+  applyAnimation(currentAnimationType, animationIntensity, animationSpeed);
+}
+
+// Funciones para fondos animados
+function createRain(intensity = 200, speed = 5) {
+  const rainContainer = document.createElement('div');
+  rainContainer.className = 'background-animation rain-background';
+  document.body.appendChild(rainContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createRainDrop(rainContainer, speed);
+  }
+  
+  return rainContainer;
+}
+
+function createRainDrop(container, speed) {
+  const drop = document.createElement('div');
+  drop.className = 'drop';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 0.5 + Math.random() * (2 / speed);
+  const height = 10 + Math.random() * 20;
+  const opacity = 0.1 + Math.random() * 0.9;
+  
+  drop.style.left = `${left}%`;
+  drop.style.top = `${-20}px`;
+  drop.style.animationDelay = `${delay}s`;
+  drop.style.animationDuration = `${duration}s`;
+  drop.style.height = `${height}px`;
+  drop.style.opacity = opacity;
+  
+  container.appendChild(drop);
+  
+  drop.addEventListener('animationiteration', () => {
+    drop.style.left = `${Math.random() * 100}%`;
+    drop.style.top = `${-20}px`;
+    drop.style.opacity = 0.1 + Math.random() * 0.9;
+  });
+}
+
+function createSnow(intensity = 200, speed = 5) {
+  const snowContainer = document.createElement('div');
+  snowContainer.className = 'background-animation snow-background';
+  document.body.appendChild(snowContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createSnowflake(snowContainer, speed);
+  }
+  
+  return snowContainer;
+}
+
+function createSnowflake(container, speed) {
+  const flake = document.createElement('div');
+  flake.className = 'snowflake';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 2 + Math.random() * (8 / speed);
+  const size = 2 + Math.random() * 4;
+  
+  flake.style.left = `${left}%`;
+  flake.style.top = `${-20}px`;
+  flake.style.animationDelay = `${delay}s`;
+  flake.style.animationDuration = `${duration}s`;
+  flake.style.width = `${size}px`;
+  flake.style.height = `${size}px`;
+  
+  container.appendChild(flake);
+  
+  flake.addEventListener('animationiteration', () => {
+    flake.style.left = `${Math.random() * 100}%`;
+    flake.style.top = `${-20}px`;
+  });
+}
+
+function createStars(intensity = 200) {
+  const starsContainer = document.createElement('div');
+  starsContainer.className = 'background-animation stars-background';
+  document.body.appendChild(starsContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createStar(starsContainer);
+  }
+  
+  return starsContainer;
+}
+
+function createStar(container) {
+  const star = document.createElement('div');
+  star.className = 'star';
+  
+  const left = Math.random() * 100;
+  const top = Math.random() * 100;
+  const delay = Math.random() * 3;
+  const size = 1 + Math.random();
+  
+  star.style.left = `${left}%`;
+  star.style.top = `${top}%`;
+  star.style.animationDelay = `${delay}s`;
+  star.style.width = `${size}px`;
+  star.style.height = `${size}px`;
+  
+  container.appendChild(star);
+}
+
+function createBubbles(intensity = 200, speed = 5) {
+  const bubblesContainer = document.createElement('div');
+  bubblesContainer.className = 'background-animation bubbles-background';
+  document.body.appendChild(bubblesContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createBubble(bubblesContainer, speed);
+  }
+  
+  return bubblesContainer;
+}
+
+function createBubble(container, speed) {
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 5 + Math.random() * (15 / speed);
+  const size = 5 + Math.random() * 15;
+  
+  bubble.style.left = `${left}%`;
+  bubble.style.top = `100vh`;
+  bubble.style.animationDelay = `${delay}s`;
+  bubble.style.animationDuration = `${duration}s`;
+  bubble.style.width = `${size}px`;
+  bubble.style.height = `${size}px`;
+  
+  container.appendChild(bubble);
+  
+  bubble.addEventListener('animationiteration', () => {
+    bubble.style.left = `${Math.random() * 100}%`;
+    bubble.style.top = `100vh`;
+  });
+}
+
+function createLeaves(intensity = 200, speed = 5) {
+  const leavesContainer = document.createElement('div');
+  leavesContainer.className = 'background-animation leaves-background';
+  document.body.appendChild(leavesContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createLeaf(leavesContainer, speed);
+  }
+  
+  return leavesContainer;
+}
+
+function createLeaf(container, speed) {
+  const leaf = document.createElement('div');
+  leaf.className = 'leaf';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 3 + Math.random() * (10 / speed);
+  const size = 10 + Math.random() * 10;
+  
+  leaf.style.left = `${left}%`;
+  leaf.style.top = `${-20}px`;
+  leaf.style.animationDelay = `${delay}s`;
+  leaf.style.animationDuration = `${duration}s`;
+  leaf.style.width = `${size}px`;
+  leaf.style.height = `${size}px`;
+  
+  container.appendChild(leaf);
+  
+  leaf.addEventListener('animationiteration', () => {
+    leaf.style.left = `${Math.random() * 100}%`;
+    leaf.style.top = `${-20}px`;
+  });
+}
+
+function createFire(intensity = 200, speed = 5) {
+  const fireContainer = document.createElement('div');
+  fireContainer.className = 'background-animation fire-background';
+  document.body.appendChild(fireContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createSpark(fireContainer, speed);
+  }
+  
+  return fireContainer;
+}
+
+function createSpark(container, speed) {
+  const spark = document.createElement('div');
+  spark.className = 'spark';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 1 + Math.random() * (3 / speed);
+  const size = 2 + Math.random() * 3;
+  
+  spark.style.left = `${left}%`;
+  spark.style.top = `100vh`;
+  spark.style.animationDelay = `${delay}s`;
+  spark.style.animationDuration = `${duration}s`;
+  spark.style.width = `${size}px`;
+  spark.style.height = `${size}px`;
+  
+  container.appendChild(spark);
+  
+  spark.addEventListener('animationiteration', () => {
+    spark.style.left = `${Math.random() * 100}%`;
+    spark.style.top = `100vh`;
+  });
+}
+
+function applyAnimation(animationType, intensity, speed) {
+  // Eliminar animación actual
+  if (currentAnimation) {
+    currentAnimation.remove();
+    currentAnimation = null;
+  }
+  
+  // Aplicar nueva animación
+  switch(animationType) {
+    case 'rain':
+      currentAnimation = createRain(intensity, speed);
+      break;
+    case 'snow':
+      currentAnimation = createSnow(intensity, speed);
+      break;
+    case 'stars':
+      currentAnimation = createStars(intensity);
+      break;
+    case 'bubbles':
+      currentAnimation = createBubbles(intensity, speed);
+      break;
+    case 'leaves':
+      currentAnimation = createLeaves(intensity, speed);
+      break;
+    case 'fire':
+      currentAnimation = createFire(intensity, speed);
+      break;
+    case 'hearts':
+      currentAnimation = createHearts(intensity, speed);
+      break;
+    case 'confetti':
+      currentAnimation = createConfetti(intensity, speed);
+      break;
+    case 'matrix':
+      currentAnimation = createMatrix(intensity);
+      break;
+    case 'galaxy':
+      currentAnimation = createGalaxy(intensity);
+      break;
+    case 'aurora':
+      currentAnimation = createAurora();
+      break;
+    case 'ocean':
+      currentAnimation = createOcean(intensity, speed);
+      break;
+    case 'particles':
+      currentAnimation = createParticles(intensity, speed);
+      
+      break;
+    case 'cyber':
+      currentAnimation = createCyber(intensity, speed);
+      break;
+    default:
+      // Ninguna animación
+      break;
+  }
+  
+  // Guardar configuración
+  currentAnimationType = animationType;
+  animationIntensity = intensity;
+  animationSpeed = speed;
+  
+  localStorage.setItem('animationType', animationType);
+  localStorage.setItem('animationIntensity', intensity);
+  localStorage.setItem('animationSpeed', speed);
+}
+
+function showBackgroundModal() {
+  backgroundModal.style.display = 'flex';
+  settingsMenu.classList.remove('show');
+  
+  // Cargar configuración actual
+  document.getElementById('intensity').value = animationIntensity;
+  document.getElementById('speed').value = animationSpeed;
+  document.getElementById('intensity-value').textContent = animationIntensity;
+  document.getElementById('speed-value').textContent = animationSpeed;
+  
+  // Marcar botón activo
+  document.querySelectorAll('.animation-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.dataset.animation === currentAnimationType) {
+      btn.classList.add('active');
+    }
+  });
+}
+
+function closeBackgroundModal() {
+  backgroundModal.style.display = 'none';
+}
+
+// Event listeners para fondos animados
+document.getElementById('backgroundAnimationToggle').addEventListener('click', showBackgroundModal);
+
+// Configurar controles de fondos animados
+document.getElementById('intensity').addEventListener('input', function() {
+  const value = this.value;
+  document.getElementById('intensity-value').textContent = value;
+  applyAnimation(currentAnimationType, value, animationSpeed);
+});
+
+document.getElementById('speed').addEventListener('input', function() {
+  const value = this.value;
+  document.getElementById('speed-value').textContent = value;
+  applyAnimation(currentAnimationType, animationIntensity, value);
+});
+
+document.querySelectorAll('.animation-btn').forEach(button => {
+  button.addEventListener('click', function() {
+    document.querySelectorAll('.animation-btn').forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+    applyAnimation(this.dataset.animation, animationIntensity, animationSpeed);
+  });
+});
+
+// Inicializar al cargar la página
+initializeBackgroundAnimation();
+
+
+
+
+
+
+// Nuevas funciones para fondos animados adicionales
+
+function createHearts(intensity = 200, speed = 5) {
+  const heartsContainer = document.createElement('div');
+  heartsContainer.className = 'background-animation hearts-background';
+  document.body.appendChild(heartsContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createHeart(heartsContainer, speed);
+  }
+  
+  return heartsContainer;
+}
+
+function createHeart(container, speed) {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 3 + Math.random() * (7 / speed);
+  const size = 8 + Math.random() * 12;
+  const colors = ['#ff6b6b', '#ff8e8e', '#ff5252', '#ff4081', '#f48fb1'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  
+  heart.style.left = `${left}%`;
+  heart.style.top = `${-20}px`;
+  heart.style.animationDelay = `${delay}s`;
+  heart.style.animationDuration = `${duration}s`;
+  heart.style.width = `${size}px`;
+  heart.style.height = `${size}px`;
+  heart.style.background = color;
+  
+  container.appendChild(heart);
+  
+  heart.addEventListener('animationiteration', () => {
+    heart.style.left = `${Math.random() * 100}%`;
+    heart.style.top = `${-20}px`;
+  });
+}
+
+function createConfetti(intensity = 200, speed = 5) {
+  const confettiContainer = document.createElement('div');
+  confettiContainer.className = 'background-animation';
+  confettiContainer.style.background = 'linear-gradient(to bottom, #667eea, #764ba2)';
+  document.body.appendChild(confettiContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createConfettiPiece(confettiContainer, speed);
+  }
+  
+  return confettiContainer;
+}
+
+function createConfettiPiece(container, speed) {
+  const confetti = document.createElement('div');
+  confetti.className = 'confetti';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 2 + Math.random() * (6 / speed);
+  const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const shapes = ['square', 'circle', 'rectangle'];
+  const shape = shapes[Math.floor(Math.random() * shapes.length)];
+  
+  confetti.style.left = `${left}%`;
+  confetti.style.top = `${-20}px`;
+  confetti.style.animationDelay = `${delay}s`;
+  confetti.style.animationDuration = `${duration}s`;
+  confetti.style.background = color;
+  
+  if (shape === 'circle') {
+    confetti.style.borderRadius = '50%';
+  } else if (shape === 'rectangle') {
+    confetti.style.width = '4px';
+    confetti.style.height = '12px';
+  }
+  
+  container.appendChild(confetti);
+  
+  confetti.addEventListener('animationiteration', () => {
+    confetti.style.left = `${Math.random() * 100}%`;
+    confetti.style.top = `${-20}px`;
+  });
+}
+
+function createMatrix(intensity = 900000) {
+  const matrixContainer = document.createElement('div');
+  matrixContainer.className = 'background-animation matrix-background';
+  document.body.appendChild(matrixContainer);
+  
+  const chars = '01ア7シ∧Ωカ9レヲ01ミ中Λホ∂キ03ツΨネβフ01ソ〒ル々タ01ク冗9マØリ01セカµヌ∞メ01ワギΣユ5チØナ01ヒロΔケπモ01サΨレФト8ノ0101ΨケヌΛ3ヨタ∂ホ7ミΩル01カシ冗9モネ01ツΦマ∧レフ01ワクØセト01ラΨヒ6ユメ01チπノカΦソ01サリΩケム01';
+  
+  for (let i = 0; i < intensity; i++) {
+    createMatrixChar(matrixContainer, chars);
+  }
+  
+  return matrixContainer;
+}
+
+function createMatrixChar(container, chars) {
+  const char = document.createElement('div');
+  char.className = 'matrix-char';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 1 + Math.random() * 4;
+  const charText = chars[Math.floor(Math.random() * chars.length)];
+  
+  char.textContent = charText;
+  char.style.left = `${left}%`;
+  char.style.top = `${-20}px`;
+  char.style.animationDelay = `${delay}s`;
+  char.style.animationDuration = `${duration}s`;
+  char.style.opacity = Math.random() * 0.5 + 0.5;
+  
+  container.appendChild(char);
+  
+  char.addEventListener('animationiteration', () => {
+    char.style.left = `${Math.random() * 100}%`;
+    char.style.top = `${-20}px`;
+    char.textContent = chars[Math.floor(Math.random() * chars.length)];
+    char.style.opacity = Math.random() * 0.5 + 0.5;
+  });
+}
+
+function createGalaxy(intensity = 200) {
+  const galaxyContainer = document.createElement('div');
+  galaxyContainer.className = 'background-animation galaxy-background';
+  document.body.appendChild(galaxyContainer);
+  
+  // Estrellas normales
+  for (let i = 0; i < intensity; i++) {
+    createStarCluster(galaxyContainer);
+  }
+  
+  // Estrellas fugaces
+  for (let i = 0; i < intensity / 20; i++) {
+    createShootingStar(galaxyContainer);
+  }
+  
+  return galaxyContainer;
+}
+
+function createStarCluster(container) {
+  const star = document.createElement('div');
+  star.className = 'star-cluster';
+  
+  const left = Math.random() * 100;
+  const top = Math.random() * 100;
+  const delay = Math.random() * 2;
+  const size = 1 + Math.random() * 2;
+  
+  star.style.left = `${left}%`;
+  star.style.top = `${top}%`;
+  star.style.animationDelay = `${delay}s`;
+  star.style.width = `${size}px`;
+  star.style.height = `${size}px`;
+  
+  container.appendChild(star);
+}
+
+function createShootingStar(container) {
+  const star = document.createElement('div');
+  star.className = 'shooting-star';
+  
+  const left = Math.random() * 100;
+  const top = Math.random() * 100;
+  const delay = Math.random() * 10;
+  const duration = 1 + Math.random() * 2;
+  
+  star.style.left = `${left}%`;
+  star.style.top = `${top}%`;
+  star.style.animationDelay = `${delay}s`;
+  star.style.animationDuration = `${duration}s`;
+  
+  container.appendChild(star);
+  
+  star.addEventListener('animationiteration', () => {
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+  });
+}
+
+function createAurora() {
+  const auroraContainer = document.createElement('div');
+  auroraContainer.className = 'background-animation aurora-background';
+  document.body.appendChild(auroraContainer);
+  
+  // Crear varios haces de aurora
+  for (let i = 0; i < 3; i++) {
+    createAuroraBeam(auroraContainer, i);
+  }
+  
+  return auroraContainer;
+}
+
+function createAuroraBeam(container, index) {
+  const beam = document.createElement('div');
+  beam.className = 'aurora-beam';
+  
+  const delay = index * 2;
+  const height = 200 + Math.random() * 300;
+  
+  beam.style.animationDelay = `${delay}s`;
+  beam.style.height = `${height}px`;
+  beam.style.left = `${Math.random() * 100}%`;
+  
+  container.appendChild(beam);
+}
+
+function createOcean(intensity = 200, speed = 5) {
+  const oceanContainer = document.createElement('div');
+  oceanContainer.className = 'background-animation ocean-background';
+  document.body.appendChild(oceanContainer);
+  
+  // Crear olas
+  for (let i = 0; i < 3; i++) {
+    createWave(oceanContainer, i, speed);
+  }
+  
+  // Crear burbujas
+  for (let i = 0; i < intensity; i++) {
+    createOceanBubble(oceanContainer, speed);
+  }
+  
+  return oceanContainer;
+}
+
+function createWave(container, index, speed) {
+  const wave = document.createElement('div');
+  wave.className = 'wave';
+  
+  const delay = index * 1;
+  const duration = 3 + (index * 0.5);
+  const height = 30 + (index * 10);
+  
+  wave.style.animationDelay = `${delay}s`;
+  wave.style.animationDuration = `${duration / speed}s`;
+  wave.style.height = `${height}px`;
+  wave.style.bottom = `${index * 15}px`;
+  wave.style.opacity = 0.3 + (index * 0.1);
+  
+  container.appendChild(wave);
+}
+
+function createOceanBubble(container, speed) {
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 2 + Math.random() * (8 / speed);
+  const size = 2 + Math.random() * 8;
+  
+  bubble.style.left = `${left}%`;
+  bubble.style.top = `100vh`;
+  bubble.style.animationDelay = `${delay}s`;
+  bubble.style.animationDuration = `${duration}s`;
+  bubble.style.width = `${size}px`;
+  bubble.style.height = `${size}px`;
+  
+  container.appendChild(bubble);
+  
+  bubble.addEventListener('animationiteration', () => {
+    bubble.style.left = `${Math.random() * 100}%`;
+    bubble.style.top = `100vh`;
+  });
+}
+
+function createParticles(intensity = 200, speed = 5) {
+  const particlesContainer = document.createElement('div');
+  particlesContainer.className = 'background-animation particles-background';
+  document.body.appendChild(particlesContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createParticle(particlesContainer, speed);
+  }
+  
+  return particlesContainer;
+}
+
+function createParticle(container, speed) {
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 2 + Math.random() * (8 / speed);
+  const size = 1 + Math.random() * 3;
+  const colors = ['#fff', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57'];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  
+  particle.style.left = `${left}%`;
+  particle.style.top = `100vh`;
+  particle.style.animationDelay = `${delay}s`;
+  particle.style.animationDuration = `${duration}s`;
+  particle.style.width = `${size}px`;
+  particle.style.height = `${size}px`;
+  particle.style.background = color;
+  
+  container.appendChild(particle);
+  
+  particle.addEventListener('animationiteration', () => {
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `100vh`;
+  });
+}
+
+function createNebula(intensity = 100) {
+  const nebulaContainer = document.createElement('div');
+  nebulaContainer.className = 'background-animation nebula-background';
+  document.body.appendChild(nebulaContainer);
+  
+  for (let i = 0; i < intensity; i++) {
+    createNebulaCloud(nebulaContainer);
+  }
+  
+  return nebulaContainer;
+}
+
+function createNebulaCloud(container) {
+  const cloud = document.createElement('div');
+  cloud.className = 'nebula-cloud';
+  
+  const left = Math.random() * 100;
+  const top = Math.random() * 100;
+  const delay = Math.random() * 4;
+  const size = 50 + Math.random() * 200;
+  const colors = [
+    'rgba(138, 43, 226, 0.6)',
+    'rgba(75, 0, 130, 0.6)',
+    'rgba(148, 0, 211, 0.6)',
+    'rgba(123, 104, 238, 0.6)'
+  ];
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  
+  cloud.style.left = `${left}%`;
+  cloud.style.top = `${top}%`;
+  cloud.style.animationDelay = `${delay}s`;
+  cloud.style.width = `${size}px`;
+  cloud.style.height = `${size}px`;
+  cloud.style.background = color;
+  
+  container.appendChild(cloud);
+}
+
+function createCyber(intensity = 200, speed = 5) {
+  const cyberContainer = document.createElement('div');
+  cyberContainer.className = 'background-animation cyber-background';
+  document.body.appendChild(cyberContainer);
+  
+  // Crear grid
+  createCyberGrid(cyberContainer);
+  
+  // Crear nodos de datos
+  for (let i = 0; i < intensity; i++) {
+    createDataNode(cyberContainer, speed);
+  }
+  
+  return cyberContainer;
+}
+
+function createCyberGrid(container) {
+  // Líneas horizontales
+  for (let i = 0; i < 20; i++) {
+    const line = document.createElement('div');
+    line.className = 'grid-line';
+    line.style.width = '100%';
+    line.style.height = '1px';
+    line.style.top = `${i * 5}%`;
+    line.style.animationDelay = `${(i % 3) * 0.5}s`;
+    container.appendChild(line);
+  }
+  
+  // Líneas verticales
+  for (let i = 0; i < 20; i++) {
+    const line = document.createElement('div');
+    line.className = 'grid-line';
+    line.style.height = '100%';
+    line.style.width = '1px';
+    line.style.left = `${i * 5}%`;
+    line.style.animationDelay = `${(i % 3) * 0.5}s`;
+    container.appendChild(line);
+  }
+}
+
+function createDataNode(container, speed) {
+  const node = document.createElement('div');
+  node.className = 'data-node';
+  
+  const left = Math.random() * 100;
+  const delay = Math.random() * 5;
+  const duration = 2 + Math.random() * (8 / speed);
+  
+  node.style.left = `${left}%`;
+  node.style.top = `100vh`;
+  node.style.animationDelay = `${delay}s`;
+  node.style.animationDuration = `${duration}s`;
+  
+  container.appendChild(node);
+  
+  node.addEventListener('animationiteration', () => {
+    node.style.left = `${Math.random() * 100}%`;
+    node.style.top = `100vh`;
+  });
+}
