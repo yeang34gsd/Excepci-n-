@@ -30,6 +30,13 @@
       <img src="https://cdn-icons-png.flaticon.com/128/3917/3917378.png" class="settings-option-icon" alt="Limpiar caché">
       <span>Limpiar favoritos</span>
     </div>
+  <div class="settings-option" id="backgroundAnimationToggle">
+
+  <img src="https://cdn-icons-png.flaticon.com/128/3917/3917132.png" class="settings-option-icon" alt="Fondos animados">
+
+  <span>Fondos</span>
+
+</div>
   </div>
 
   <!-- Galería principal -->
@@ -179,7 +186,58 @@
     <h2>        </h2>
     <div class="liked-images-grid" id="liked-images"></div>
   </div>
+<!-- Modal para fondos animados -->
+<div id="background-modal" class="modal" style="display: none;">
+  <div class="modal-content" style="max-width: 90%; max-height: 90%; overflow-y: auto;">
+    <h2 style="text-align: center; margin-bottom: 20px; color: var(--text-color);">Fondos Animados</h2>
+    
+    <div class="animation-selector">
+  <button class="animation-btn" data-animation="rain">🌧️ Lluvia</button>
+  <button class="animation-btn" data-animation="snow">❄️ Nieve</button>
+  <button class="animation-btn" data-animation="stars">⭐ Estrellas</button>
+  <button class="animation-btn" data-animation="bubbles">🫧 Burbujas</button>
+  <button class="animation-btn" data-animation="leaves">🍃 Hojas</button>
+  <button class="animation-btn" data-animation="fire">🔥 Chispas</button>
+  <button class="animation-btn" data-animation="hearts">💖 Corazones</button>
+  <button class="animation-btn" data-animation="confetti">🎊 Confetti</button>
+  <button class="animation-btn" data-animation="matrix">💻 Matrix</button>
+  <button class="animation-btn" data-animation="galaxy">🌌 Galaxia</button>
+  <button class="animation-btn" data-animation="aurora">🌠 Aurora</button>
+  <button class="animation-btn" data-animation="ocean">🌊 Océano</button>
+  <button class="animation-btn" data-animation="particles">✨ Partículas</button>
+  <button class="animation-btn" data-animation="cyber">🔮 Cyber</button>
+  <button class="animation-btn" data-animation="none">❌ Ninguno</button>
+    </div>
+    
+    <div class="controls">
+      <div class="slider-container">
+        <label for="intensity" style="color: var(--text-color);">Intensidad: <span id="intensity-value">200</span></label>
+        <input type="range" id="intensity" min="50" max="500" value="200">
+      </div>
+      
+      <div class="slider-container">
+        <label for="speed" style="color: var(--text-color);">Velocidad: <span id="speed-value">5</span></label>
+        <input type="range" id="speed" min="1" max="10" value="5">
+      </div>
+    </div>
+    
+    <button class="modal-btn close-btn" onclick="closeBackgroundModal()" style="margin-top: 20px;">
+      <img src="https://cdn-icons-png.flaticon.com/128/3917/3917161.png" class="modal-btn-icon" alt="Cerrar">
+      <span>Cerrar</span>
+    </button>
+  </div>
+</div>
 
+
+
+
+
+
+
+
+
+
+  
   <!-- Script de CommentBox -->
   <script src="https://unpkg.com/commentbox.io/dist/commentBox.min.js"></script>
   <script src="script.js"></script>
