@@ -1017,3 +1017,474 @@ button:hover, .nav-icon:hover, .settings-option:hover, .search-category:hover {
 
 }
 
+
+
+
+
+
+
+
+
+
+
+/* Estilos para fondos animados */
+.animation-selector {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.animation-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 20px;
+  background: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.animation-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.animation-btn.active {
+  background: var(--active-color);
+  color: white;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.slider-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.slider-container label {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+input[type="range"] {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Fondos animados */
+.background-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Lluvia */
+.rain-background .drop {
+  position: absolute;
+  width: 2px;
+  height: 15px;
+  background: linear-gradient(to bottom, transparent, rgba(174, 194, 224, 0.8));
+  border-radius: 0 0 5px 5px;
+  animation: rain linear infinite;
+}
+
+@keyframes rain {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+/* Nieve */
+.snow-background .snowflake {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  animation: snowfall linear infinite;
+}
+
+@keyframes snowfall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+/* Estrellas */
+.stars-background {
+  background: #000;
+}
+
+.stars-background .star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+  0% { opacity: 0.2; }
+  100% { opacity: 1; }
+}
+
+/* Burbujas */
+.bubbles-background {
+  background: linear-gradient(to bottom, #1a2a3a, #0c141f);
+}
+
+.bubbles-background .bubble {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  animation: bubble-rise linear infinite;
+}
+
+@keyframes bubble-rise {
+  to {
+    transform: translateY(-100vh);
+  }
+}
+
+/* Hojas */
+.leaves-background {
+  background: linear-gradient(to bottom, #2d5016, #1a2f0d);
+}
+
+.leaves-background .leaf {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #8FBC8F;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  animation: leaf-fall linear infinite;
+}
+
+@keyframes leaf-fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+/* Fuego */
+.fire-background {
+  background: linear-gradient(to bottom, #8B0000, #000);
+}
+
+.fire-background .spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #FF4500;
+  border-radius: 50%;
+  animation: spark-rise linear infinite;
+}
+
+@keyframes spark-rise {
+  to {
+    transform: translateY(-100vh);
+  }
+}
+
+/* Ajustes para modo oscuro en fondos animados */
+.dark-mode .animation-btn {
+  filter: drop-shadow(0 0 5px rgba(135, 206, 235, 0.5));
+}
+
+.dark-mode .animation-btn:hover {
+  filter: drop-shadow(0 0 8px rgba(135, 206, 235, 0.7));
+}
+
+.dark-mode .animation-btn.active {
+  filter: drop-shadow(0 0 10px rgba(135, 206, 235, 0.8));
+}
+
+
+/* Nuevos fondos animados */
+
+/* Corazones */
+.hearts-background {
+  background: linear-gradient(to bottom, #ff9a9e, #fecfef);
+}
+
+.hearts-background .heart {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #ff6b6b;
+  transform: rotate(45deg);
+  animation: heart-float linear infinite;
+}
+
+.hearts-background .heart::before,
+.hearts-background .heart::after {
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background: #ff6b6b;
+  border-radius: 50%;
+}
+
+.hearts-background .heart::before {
+  top: -7.5px;
+  left: 0;
+}
+
+.hearts-background .heart::after {
+  top: 0;
+  left: -7.5px;
+}
+
+@keyframes heart-float {
+  to {
+    transform: translateY(100vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+/* Confetti */
+.confetti-background .confetti {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  animation: confetti-fall linear infinite;
+}
+
+@keyframes confetti-fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+  }
+}
+
+/* Matrix */
+.matrix-background {
+  background: #000;
+  font-family: monospace;
+}
+
+.matrix-background .matrix-char {
+  position: absolute;
+  color: #0f0;
+  font-size: 14px;
+  animation: matrix-fall linear infinite;
+  text-shadow: 0 0 5px #0f0;
+}
+
+@keyframes matrix-fall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+/* Galaxia */
+.galaxy-background {
+  background: linear-gradient(to bottom, #000428, #004e92);
+}
+
+.galaxy-background .star-cluster {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite alternate;
+  box-shadow: 0 0 10px white;
+}
+
+.galaxy-background .shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: shooting-star linear infinite;
+  box-shadow: 0 0 20px white;
+}
+
+@keyframes shooting-star {
+  0% {
+    transform: translateX(-100px) translateY(-100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw) translateY(100vh);
+    opacity: 0;
+  }
+}
+
+/* Aurora */
+.aurora-background {
+  background: linear-gradient(45deg, #000, #001f3f, #0074D9, #7FDBFF);
+  background-size: 400% 400%;
+  animation: aurora-shift 10s ease infinite;
+}
+
+@keyframes aurora-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.aurora-background .aurora-beam {
+  position: absolute;
+  height: 100%;
+  width: 100px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.3), transparent);
+  animation: aurora-sweep 8s ease-in-out infinite;
+}
+
+@keyframes aurora-sweep {
+  0%, 100% { transform: translateX(-100px); opacity: 0; }
+  50% { transform: translateX(100vw); opacity: 1; }
+}
+
+/* Océano */
+.ocean-background {
+  background: linear-gradient(to bottom, #0077be, #00aaff);
+  overflow: hidden;
+}
+
+.ocean-background .wave {
+  position: absolute;
+  bottom: 0;
+  width: 200%;
+  height: 50px;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.3));
+  border-radius: 50%;
+  animation: wave-move linear infinite;
+}
+
+.ocean-background .bubble {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: ocean-bubble linear infinite;
+}
+
+@keyframes wave-move {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes ocean-bubble {
+  to {
+    transform: translateY(-100vh);
+  }
+}
+
+/* Partículas */
+.particles-background {
+  background: #1a1a2e;
+}
+
+.particles-background .particle {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  animation: particle-float linear infinite;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Nebulosa */
+.nebula-background {
+  background: radial-gradient(circle, #2c003e, #000);
+}
+
+.nebula-background .nebula-cloud {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(138, 43, 226, 0.6), transparent);
+  animation: nebula-pulse 4s ease-in-out infinite;
+}
+
+@keyframes nebula-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.3; }
+  50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+/* Cyber */
+.cyber-background {
+  background: #0a0a0a;
+}
+
+.cyber-background .grid-line {
+  position: absolute;
+  background: rgba(0, 255, 255, 0.1);
+  animation: grid-pulse 2s ease-in-out infinite;
+}
+
+.cyber-background .data-node {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00ffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #00ffff;
+  animation: data-flow linear infinite;
+}
+
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes data-flow {
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+/* Mejoras para los controles */
+.animation-selector {
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: var(--card-bg);
+}
+
+.animation-btn {
+  flex: 1 1 calc(25% - 10px);
+  min-width: 120px;
+  text-align: center;
+  font-size: 12px;
+  padding: 8px 5px;
+}
