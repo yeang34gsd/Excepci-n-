@@ -43,9 +43,9 @@ if (darkModeEnabled) {
 const images = [
   { url: 'https://i.pinimg.com/736x/ac/5c/02/ac5c02400375cfbb49c2951890e07c6b.jpg', keywords: [], id: 'img41' },
   { url: 'https://i.pinimg.com/736x/86/6a/16/866a16233beaf09d361f3fccee558c29.jpg', keywords: [], id: 'img42' },
-  { url: 'https://i.pinimg.com/736x/9f/d5/c1/9fd5c1b1f3e50aeb930ebc644744d91a.jpg', keywords: ['pájaro', 'animal', 'love'], id: 'img10' },
-// Array completo transformado
-const imagesDatabase = [
+   { url: 'https://i.pinimg.com/736x/9f/d5/c1/9fd5c1b1f3e50aeb930ebc644744d91a.jpg', keywords: ['pájaro', 'animal', 'love'], id: 'img10' },
+
+  
   { url: 'https://i.pinimg.com/736x/d3/b5/b0/d3b5b0fb8aa60e60301e3a091d19346f.jpg', keywords: ['Anime', 'Cute', 'Love', 'Pink'], id: 'img1' },
   { url: 'https://i.pinimg.com/736x/00/40/e7/0040e70eab7c49e400eac38efc1d7fe4.jpg', keywords: ['Anime', 'Cute', 'Love', 'Pink'], id: 'img2' },
   { url: 'https://i.pinimg.com/736x/7f/1d/7d/7f1d7d7a9c96e949674c4e931887b72b.jpg', keywords: ['Anime', 'Cute', 'Magic Fluids', 'Love'], id: 'img3' },
