@@ -230,7 +230,8 @@ const images = [
   { url: 'https://i.pinimg.com/736x/52/70/a5/5270a5326e16e5092000a7dc8754dd31.jpg', keywords: ['Anime', 'Cute', 'Magic Fluids', 'Love'], id: 'img180' },
   { url: 'https://i.pinimg.com/736x/80/48/7a/80487a75efc4a5d7778b987c42c1eb61.jpg', keywords: ['Anime', 'Cute', 'Magic Fluids', 'Love'], id: 'img181' },
   { url: 'https://i.pinimg.com/736x/93/e8/05/93e805198ff59d158a3f203d1e0e0685.jpg', keywords: ['Anime', 'Cute', 'Magic Fluids', 'Love'], id: 'img182' },
-  { url: 'https://i.pinimg.com/736x/c9/33/e4/c933e4650766cb0a4e602d45d467f102.jpg', keywords: ['Anime', 'Cute', 'Magic Fluids', 'Love'], id: 'img183' }
+  { url: 'https://i.pinimg.com/736x/c9/33/e4/c933e4650766cb0a4e602d45d467f102.jpg', keywords: ['Anime', 'Cute', 'Magic Fluids', 'Love'], id: 'img183' },
+  
 ];
 
 
